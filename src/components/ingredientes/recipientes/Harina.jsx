@@ -17,7 +17,8 @@ export const Harina = () => {
       <div className='formDiv'>
 
         <form className='form' action="">
-          <input className='input' type="date" placeholder='Ingresar fecha' />
+            <h4 className='ingresarFecha'>Ingresar fecha haciendo click en el recuadro blanco </h4>
+            <input className='input' type="date" placeholder='Ingresar fecha' />
         </form>
 
         <button className='guardarBtn'>Guardar</button>

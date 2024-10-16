@@ -1,6 +1,7 @@
 import React from 'react'
 import './recipientes.css'
 import { Link } from 'react-router-dom'
+import db from '../../../db/db'
 
 export const Azucar = () => {
   return (
@@ -17,6 +18,7 @@ export const Azucar = () => {
       <div className='formDiv'>
 
         <form className='form' action="">
+            <h4 className='ingresarFecha'>Ingresar fecha haciendo click en el recuadro blanco </h4>
             <input className='input' type="date" placeholder='Ingresar fecha' />
         </form>
 

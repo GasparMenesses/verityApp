@@ -42,10 +42,11 @@
     font-weight: 600;
     letter-spacing: 1px;
     color: rgb(47, 94, 87);
+    font-size: 3vw;
 }
 
 .input {
-    margin: 0 10px 0 0;
+    margin: 0 20px 0 0;
 }
 
 .guardarBtn {
