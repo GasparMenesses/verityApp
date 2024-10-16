@@ -36,15 +36,16 @@
     align-items: center;
 }
 
+.ingresarFecha {
+    margin: 20px;
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgb(47, 94, 87);
+}
+
 .input {
-    /* background-color: rgb(176, 198, 178);
-    border: 3px solid rgb(47, 94, 87);
-    width: 50%;
-    max-width: 300px;
-    padding: 4% 16%;
-    border-radius: 15px; */
-    width: 90%;
-    height: 30%;
+    margin: 0 10px 0 0;
 }
 
 .guardarBtn {
