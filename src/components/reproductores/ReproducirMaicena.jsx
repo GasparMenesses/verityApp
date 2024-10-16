@@ -1,10 +1,10 @@
 import React from 'react'
-import './inicioverity.css'
+import './inicioVerity.css'
 
 export const ReproducirMaicena = () => {
   return (
     <div className="reproductor">
-        <button className="botonReproducir" onclick="leerTexto()">REPRODUCIR</button>
+        {/* <button className="botonReproducir" onClick="leerTexto()">REPRODUCIR</button> */}
     </div>
   )
 }

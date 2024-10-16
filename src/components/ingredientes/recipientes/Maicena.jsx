@@ -46,18 +46,18 @@ export const Maicena = () => {
       <h2 className='elementh2'>Fecha de vencimiento</h2>
 
       <div className='formDiv'>
-  <form className='form'>
-    <h4 className='ingresarFecha'>Ingresar fecha haciendo click en el recuadro blanco</h4>
-    <input 
-      className='input' 
-      type="date" 
-      value={fecha} 
-      onChange={handleChange} 
-      placeholder='Ingresar fecha' 
-    />
-  </form>
+        <form className='form'>
+          <h4 className='ingresarFecha'>Ingresar fecha haciendo click en el recuadro blanco</h4>
+          <input 
+            className='input' 
+            type="date" 
+            value={fecha} 
+            onChange={handleChange} 
+            placeholder='Ingresar fecha' 
+            />
+         </form>
 
-  <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
+        <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
 
         <Link className='volverLink' to={'/'}>
           <button className='volverBtn'>Volver</button>
