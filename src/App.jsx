@@ -7,7 +7,7 @@ import { Harina } from './components/ingredientes/recipientes/Harina';
 import { Maicena } from './components/ingredientes/recipientes/Maicena';
 
 
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
 
 
 
@@ -16,12 +16,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
 
       <Routes>
 
         <Route path='/' element={<Ingredientes/>}/>
-        
+
         <Route path='/azucar' element={<Azucar />}/>
         <Route path='/cacao' element={<Cacao />}/>
         <Route path='/harina' element={<Harina />}/>
@@ -29,7 +29,7 @@ function App() {
 
       </Routes>
 
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
