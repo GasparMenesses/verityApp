@@ -1,5 +1,5 @@
 import './App.css';
-import { Reproducir } from './components/Reproducir/ReproducirHarina';
+
 import { Ingredientes } from './components/ingredientes/Ingredientes';
 import { Azucar } from './components/ingredientes/recipientes/Azucar';
 import { Cacao } from './components/ingredientes/recipientes/Cacao';
@@ -8,6 +8,10 @@ import { Maicena } from './components/ingredientes/recipientes/Maicena';
 
 
 import { HashRouter, Routes, Route } from "react-router-dom"
+import { ReproducirAzucar } from './components/reproductores/ReproducirAzucar';
+import { ReproducirCacao } from './components/reproductores/ReproducirCacao';
+import { ReproducirHarina } from './components/reproductores/ReproducirHarina';
+import { ReproducirMaicena } from './components/reproductores/ReproducirMaicena';
 
 
 
@@ -26,6 +30,13 @@ function App() {
         <Route path='/cacao' element={<Cacao />}/>
         <Route path='/harina' element={<Harina />}/>
         <Route path='/maicena' element={<Maicena />}/>
+
+        <Route path='/reproducirazucar' element={<ReproducirAzucar />}/>
+        <Route path='/reproducircacao' element={<ReproducirCacao />}/>
+        <Route path='/reproducirharina' element={<ReproducirHarina />}/>
+        <Route path='/reproducirmaicena' element={<ReproducirMaicena />}/>
+
+
 
       </Routes>
 

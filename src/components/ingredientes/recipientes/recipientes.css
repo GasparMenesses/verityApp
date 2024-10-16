@@ -51,7 +51,7 @@
 
 .guardarBtn {
     margin: 20px;
-    background-color: rgb(215, 222, 216);
+    background-color: rgb(247, 255, 253);
     border: none;
     border-radius: 15px;
     padding: 4% 16%;
@@ -59,13 +59,13 @@
     font-weight: 500;
     font-size: 5vw;
     letter-spacing: 3px;
-    color: rgb(47, 94, 87);
+    color: rgb(47, 94, 72);
 }
 
 .volverBtn {
     margin: 20px 20px;
     width: 100%;
-    background-color: rgb(215, 222, 216);
+    background-color: rgb(176, 198, 178);
     border: none;
     border-radius: 15px;
     padding: 4% 16%;
