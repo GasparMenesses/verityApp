@@ -17,7 +17,7 @@ export const Maicena = () => {
       <div className='formDiv'>
 
         <form className='form' action="">
-          <input className='input' type="date" />
+          <input className='input' type="date" placeholder='Ingresar fecha' />
         </form>
 
         <button className='guardarBtn'>Guardar</button>
