@@ -37,12 +37,14 @@
 }
 
 .input {
-    background-color: rgb(176, 198, 178);
+    /* background-color: rgb(176, 198, 178);
     border: 3px solid rgb(47, 94, 87);
     width: 50%;
     max-width: 300px;
     padding: 4% 16%;
-    border-radius: 15px;
+    border-radius: 15px; */
+    width: 90%;
+    height: 30%;
 }
 
 .guardarBtn {
