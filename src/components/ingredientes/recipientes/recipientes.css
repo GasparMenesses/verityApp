@@ -1,0 +1,78 @@
+
+.elementTitle {
+    display: flex;
+    justify-content: center;
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 8vw;
+    letter-spacing: 5px;
+    color: rgb(47, 94, 87);
+    margin: 10% 0 5% 0;
+}
+
+.elementh2 {
+    display: flex;
+    justify-content: center;
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 5vw;
+    letter-spacing: 1px;
+    color: rgb(47, 94, 87);
+    margin: 30% 0 2% 0;
+}
+
+.formDiv {
+    display: grid;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    margin: 0 10% 15% 10%;
+    border-radius: 15px;
+    height: 120px;
+    background-color: rgb(176, 198, 178);
+    align-items: center;
+}
+
+.input {
+    background-color: rgb(176, 198, 178);
+    border: 3px solid rgb(47, 94, 87);
+    padding: 4% 16%;
+    border-radius: 15px;
+}
+
+.guardarBtn {
+    margin: 20px;
+    background-color: rgb(215, 222, 216);
+    border: none;
+    border-radius: 15px;
+    padding: 4% 16%;
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 5vw;
+    letter-spacing: 3px;
+    color: rgb(47, 94, 87);
+}
+
+.volverBtn {
+    margin: 20px 20px;
+    width: 100%;
+    background-color: rgb(215, 222, 216);
+    border: none;
+    border-radius: 15px;
+    padding: 4% 16%;
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 5vw;
+    letter-spacing: 3px;
+    color: rgb(47, 94, 87);
+}
+
+.volverLink {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    width: none;
+}
+

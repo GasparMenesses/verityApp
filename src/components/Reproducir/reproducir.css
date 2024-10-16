@@ -1,0 +1,17 @@
+.reproductor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botonReproducir {
+    background-color: rgb(242, 240, 229) ;
+    color: rgb(47, 94, 87);
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    font-size: 350%;
+    letter-spacing: 5px;
+    border: none;
+    width: 100vw;
+    height: 100vh;
+}
