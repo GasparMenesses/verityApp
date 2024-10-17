@@ -6,6 +6,7 @@ import db from '../../db/db';
 export const ReproducirAzucar = () => {
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
+  const [speechLoaded, setSpeechLoaded] = useState(false);
 
   // Función para obtener los datos de Firestore
   const fetchFechaProducto = async () => {
@@ -36,14 +37,22 @@ export const ReproducirAzucar = () => {
     }
   };
 
-  // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
+  // useEffect para obtener la fecha al cargar la página
   useEffect(() => {
-    const obtenerYReproducir = async () => {
-      await fetchFechaProducto(); // Obtener la fecha
-      leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
-    };
-    obtenerYReproducir();
+    fetchFechaProducto();
+
+    // Verificar si la API de speech synthesis está lista
+    if ("speechSynthesis" in window) {
+      setSpeechLoaded(true);
+    }
   }, []);
+
+  // useEffect para reproducir el texto automáticamente cuando se carga la fecha y la API está lista
+  useEffect(() => {
+    if (fechaProducto && speechLoaded) {
+      leerTexto();
+    }
+  }, [fechaProducto, speechLoaded]);
 
   return (
     <div className="reproductor">
