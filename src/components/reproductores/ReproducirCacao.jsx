@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import './inicioVerity.css'
+import './inicioVerity.css';
 import db from '../../db/db'; 
 
 export const ReproducirCacao = () => {
@@ -25,11 +25,6 @@ export const ReproducirCacao = () => {
     }
   };
 
-  // useEffect para llamar a la función cuando el componente se monta
-  useEffect(() => {
-    fetchFechaProducto();
-  }, []);
-
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
@@ -40,6 +35,15 @@ export const ReproducirCacao = () => {
       console.log("Speech Synthesis no está disponible en este navegador o no se ha cargado la fecha.");
     }
   };
+
+  // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
+  useEffect(() => {
+    const obtenerYReproducir = async () => {
+      await fetchFechaProducto(); // Obtener la fecha
+      leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
+    };
+    obtenerYReproducir();
+  }, []);
 
   return (
     <div className="reproductor">

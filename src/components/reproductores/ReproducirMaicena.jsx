@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import './inicioVerity.css'
+import './inicioVerity.css';
 import db from '../../db/db'; 
+
 export const ReproducirMaicena = () => {
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
@@ -24,11 +25,6 @@ export const ReproducirMaicena = () => {
     }
   };
 
-  // useEffect para llamar a la función cuando el componente se monta
-  useEffect(() => {
-    fetchFechaProducto();
-  }, []);
-
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
@@ -40,10 +36,18 @@ export const ReproducirMaicena = () => {
     }
   };
 
+  // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
+  useEffect(() => {
+    const obtenerYReproducir = async () => {
+      await fetchFechaProducto(); // Obtener la fecha
+      leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
+    };
+    obtenerYReproducir();
+  }, []);
+
   return (
     <div className="reproductor">
       <button className="botonReproducir" onClick={leerTexto}>REPRODUCIR</button>
     </div>
   );
 };
-
