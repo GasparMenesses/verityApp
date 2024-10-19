@@ -25,10 +25,28 @@ export const ReproducirManteca = () => {
     }
   };
 
+//   const separarFecha = () => {
+//     oracion = prompt('Ingrese una fecha en formato DD/;
+//     let dia = "";
+//     for (let i = 0; i < 2; i++) {
+//         dia += oracion[i];
+//     }
+
+//     let mes = '';
+//     for (let i = 3; i < 5; i++) {
+//         mes += oracion[i];
+//     }
+
+//     let año = '';
+//     for (let i = 6; i < 10; i++) {
+//         año += oracion[i];
+//     }
+//   }
+
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
-      const utterance = new SpeechSynthesisUtterance(`La manteca vence el ${fechaProducto}`);
+      const utterance = new SpeechSynthesisUtterance(`La manteca vence el ${fechaProductp}`);
       utterance.lang = "es-ES"; // Español
       window.speechSynthesis.speak(utterance);
     } else {
@@ -36,14 +54,14 @@ export const ReproducirManteca = () => {
     }
   };
 
-  // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
-  useEffect(() => {
-    const obtenerYReproducir = async () => {
-      await fetchFechaProducto(); // Obtener la fecha
-      leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
-    };
-    obtenerYReproducir();
-  }, []);
+//   // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
+//   useEffect(() => {
+//     const obtenerYReproducir = async () => {
+//       await fetchFechaProducto(); // Obtener la fecha
+//       leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
+//     };
+//     obtenerYReproducir();
+//   }, []);
 
   return (
     <div className="reproductor">
