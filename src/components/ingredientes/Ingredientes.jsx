@@ -9,7 +9,17 @@ export const Ingredientes = () => {
 
         <div className='recipientes'>
             
+            <Link className='no-underline' to="/leche">
+                <div className='R'>
+                    <h2 className='textR'>Leche</h2>
+                </div>
+            </Link>
 
+            <Link className='no-underline' to="/manteca">
+                <div className='R'>
+                    <h2 className='textR'>Manteca</h2>
+                </div>
+            </Link>
 
             <Link className='no-underline' to="/azucar">
                 <div className='R'>

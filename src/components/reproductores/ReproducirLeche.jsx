@@ -3,16 +3,15 @@ import { doc, getDoc } from 'firebase/firestore';
 import './inicioVerity.css';
 import db from '../../db/db'; 
 
-export const ReproducirAzucar = () => {
+export const ReproducirLeche = () => {
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
-  const [speechLoaded, setSpeechLoaded] = useState(false);
 
   // Función para obtener los datos de Firestore
   const fetchFechaProducto = async () => {
     try {
       // Referencia al documento en Firestore
-      const docRef = doc(db, 'azucar', 'fechaazucar');
+      const docRef = doc(db, 'leche', 'fechaleche');
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -26,11 +25,10 @@ export const ReproducirAzucar = () => {
     }
   };
 
-
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
-      const utterance = new SpeechSynthesisUtterance(`El azúcar vence el ${fechaProducto}`);
+      const utterance = new SpeechSynthesisUtterance(`La leche vence el ${fechaProducto}`);
       utterance.lang = "es-ES"; // Español
       window.speechSynthesis.speak(utterance);
     } else {
@@ -38,22 +36,14 @@ export const ReproducirAzucar = () => {
     }
   };
 
-  // useEffect para obtener la fecha al cargar la página
+  // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
   useEffect(() => {
-    fetchFechaProducto();
-
-    // Verificar si la API de speech synthesis está lista
-    if ("speechSynthesis" in window) {
-      setSpeechLoaded(true);
-    }
+    const obtenerYReproducir = async () => {
+      await fetchFechaProducto(); // Obtener la fecha
+      leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
+    };
+    obtenerYReproducir();
   }, []);
-
-  // useEffect para reproducir el texto automáticamente cuando se carga la fecha y la API está lista
-  useEffect(() => {
-    if (fechaProducto && speechLoaded) {
-      leerTexto();
-    }
-  }, [fechaProducto, speechLoaded]);
 
   return (
     <div className="reproductor">
