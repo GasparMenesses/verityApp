@@ -6,14 +6,12 @@ import db from '../../db/db';
 export const ReproducirCacao = () => {
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
-
   // Función para obtener los datos de Firestore
   const fetchFechaProducto = async () => {
     try {
       // Referencia al documento en Firestore
       const docRef = doc(db, 'cacao', 'fechacacao');
       const docSnap = await getDoc(docRef);
-
       if (docSnap.exists()) {
         // Si el documento existe, guardamos el valor de la fecha en el estado
         setFechaProducto(docSnap.data().fecha);
@@ -24,7 +22,10 @@ export const ReproducirCacao = () => {
       console.error('Error al obtener el documento:', error);
     }
   };
-
+  // useEffect para llamar a la función cuando el componente se monta
+  useEffect(() => {
+    fetchFechaProducto();
+  }, []);
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
@@ -35,15 +36,6 @@ export const ReproducirCacao = () => {
       console.log("Speech Synthesis no está disponible en este navegador o no se ha cargado la fecha.");
     }
   };
-
-  // useEffect para obtener la fecha y reproducir el texto automáticamente al cargar la página
-  useEffect(() => {
-    const obtenerYReproducir = async () => {
-      await fetchFechaProducto(); // Obtener la fecha
-      leerTexto(); // Reproducir el texto automáticamente después de obtener la fecha
-    };
-    obtenerYReproducir();
-  }, []);
 
   return (
     <div className="reproductor">
