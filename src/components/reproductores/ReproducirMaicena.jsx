@@ -4,6 +4,7 @@ import './inicioVerity.css';
 import db from '../../db/db'; 
 
 export const ReproducirMaicena = () => {
+
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
   // Función para obtener los datos de Firestore
@@ -22,6 +23,18 @@ export const ReproducirMaicena = () => {
       console.error('Error al obtener el documento:', error);
     }
   };
+  const today = new Date(); // Fecha actual
+
+  // Fecha objetivo ingresada por el usuario (año, mes - 1, día)
+  const targetDate = new Date(fechaProducto); // Ejemplo: 25 de diciembre de 2024
+
+  // Calcula la diferencia en milisegundos
+  const differenceInMillis = targetDate - today;
+
+  // Convierte la diferencia a días
+  const differenceInDays = Math.ceil(differenceInMillis / (1000 * 60 * 60 * 24));
+
+
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {
     fetchFechaProducto();
@@ -29,7 +42,7 @@ export const ReproducirMaicena = () => {
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
-      const utterance = new SpeechSynthesisUtterance(`La maicena vence el ${fechaProducto}`);
+      const utterance = new SpeechSynthesisUtterance(`La maicena vence en: ${differenceInDays} días`);
       utterance.lang = "es-ES"; // Español
       window.speechSynthesis.speak(utterance);
     } else {
