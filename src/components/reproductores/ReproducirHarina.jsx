@@ -33,7 +33,11 @@ export const ReproducirHarina = () => {
 
   // Convierte la diferencia a días
   const differenceInDays = Math.ceil(differenceInMillis / (1000 * 60 * 60 * 24));
-
+  let speachVencimiento = ''
+  if (differenceInDays > 0)
+    speachVencimiento = 'La harina vence en: ' + differenceInDays + 'días'
+  else
+    speachVencimiento = 'La harina está vencida, venció hace' + (differenceInDays * -1) + 'días'
 
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {
@@ -42,7 +46,7 @@ export const ReproducirHarina = () => {
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
-      const utterance = new SpeechSynthesisUtterance(`La harina vence en: ${differenceInDays} días`);
+      const utterance = new SpeechSynthesisUtterance(speachVencimiento);
       utterance.lang = "es-ES"; // Español
       window.speechSynthesis.speak(utterance);
     } else {
