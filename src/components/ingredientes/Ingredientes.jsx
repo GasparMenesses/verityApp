@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom'
 export const Ingredientes = () => {
   return (
     <div>
-        <h1 className='titleR'>INGREDIENTES</h1>
+        <img src="" alt="" />
+
+
+
+        <h2 className='titleR'>INGREDIENTES</h2>
 
         <div className='recipientes'>
             

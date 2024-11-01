@@ -3,6 +3,7 @@ import './recipientes.css';
 import { Link } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 import db from '../../../db/db';
+import Swal from 'sweetalert2';
 
 export const Azucar = () => {
   const [fecha, setFecha] = useState('');
@@ -15,7 +16,6 @@ export const Azucar = () => {
     e.preventDefault();
     if (fecha) {
       try {
-        // Referencia al documento con el ID específico que viste en la base de datos
         const docRef = doc(db, 'azucar', 'fechaazucar');
         await setDoc(docRef, { fecha }, { merge: true });
         Swal.fire({
@@ -23,7 +23,7 @@ export const Azucar = () => {
           title: "Fecha guardada",
           text: "Los datos fueron actualizados con éxito"
         });
-        setFecha(''); // Limpiar el campo de fecha
+        setFecha('');
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -40,6 +40,34 @@ export const Azucar = () => {
     }
   };
 
+  const handleVoiceInput = () => {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "API de reconocimiento de voz no soportada en este navegador"
+      });
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'es-ES';
+    recognition.continuous = false;
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setFecha(transcript); // Setea el texto reconocido como fecha
+      Swal.fire({
+        icon: "success",
+        title: "Fecha capturada por voz",
+        text: `Fecha reconocida: ${transcript}`
+      });
+    };
+
+    recognition.start();
+  };
+
   return (
     <div>
       <h1 className='elementTitle'>AZÚCAR</h1>
@@ -54,10 +82,13 @@ export const Azucar = () => {
             value={fecha} 
             onChange={handleChange} 
             placeholder='Ingresar fecha' 
-            />
-         </form>
+          />
+        </form>
 
-         <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
+        <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
+
+        {/* Nuevo botón para ingresar fecha por voz */}
+        <button className='guardarBtn' onClick={handleVoiceInput}>Ingresar fecha por voz</button>
 
         <Link className='volverLink' to={'/'}>
           <button className='volverBtn'>Volver</button>
