@@ -66,6 +66,16 @@ export const Azucar = () => {
     };
 
     recognition.start();
+
+    // Configura un temporizador para detener el reconocimiento después de 3 segundos
+    setTimeout(() => {
+      recognition.stop();
+      Swal.fire({
+        icon: "info",
+        title: "Tiempo de reconocimiento terminado",
+        text: "El reconocimiento de voz se detuvo automáticamente."
+      });
+    }, 3000); // 3000 ms = 3 segundos
   };
 
   return (
@@ -88,7 +98,9 @@ export const Azucar = () => {
         <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
 
         {/* Nuevo botón para ingresar fecha por voz */}
-        <button className='guardarBtn' onClick={handleVoiceInput}>Ingresar fecha por voz</button>
+        <button className='guardarBtn' onClick={handleVoiceInput}>
+          Ingresar fecha por voz
+        </button>
 
         <Link className='volverLink' to={'/'}>
           <button className='volverBtn'>Volver</button>
