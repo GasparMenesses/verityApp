@@ -28,7 +28,7 @@ export const Azucar = () => {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Por favor ingresa una fecha"
+          text: "Ocurrió un problema al guardar la fecha. Intenta nuevamente."
         });
       }
     } else {
@@ -55,14 +55,32 @@ export const Azucar = () => {
     recognition.lang = 'es-ES';
     recognition.continuous = false;
 
-    recognition.onresult = (event) => {
+    recognition.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
-      setFecha(transcript); // Setea el texto reconocido como fecha
+      setFecha(transcript);
+
       Swal.fire({
         icon: "success",
         title: "Fecha capturada por voz",
         text: `Fecha reconocida: ${transcript}`
       });
+
+      // Guardar la fecha directamente en Firebase después del reconocimiento
+      try {
+        const docRef = doc(db, 'azucar', 'fechaazucar');
+        await setDoc(docRef, { fecha: transcript }, { merge: true });
+        Swal.fire({
+          icon: "success",
+          title: "Fecha guardada",
+          text: "La fecha capturada por voz fue guardada exitosamente"
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al guardar la fecha",
+          text: "Hubo un problema guardando la fecha reconocida. Intenta nuevamente."
+        });
+      }
     };
 
     recognition.start();
@@ -75,12 +93,17 @@ export const Azucar = () => {
         title: "Tiempo de reconocimiento terminado",
         text: "El reconocimiento de voz se detuvo automáticamente."
       });
-    }, 3000); // 3000 ms = 3 segundos
+    }, 4500); // 3000 ms = 3 segundos
   };
 
   return (
     <div>
       <h1 className='elementTitle'>AZÚCAR</h1>
+
+      <button className='guardarBtnVoz' onClick={handleVoiceInput}>
+          Ingresar fecha por voz
+        </button>
+        
       <h2 className='elementh2'>Fecha de vencimiento</h2>
 
       <div className='formDiv'>
@@ -96,11 +119,6 @@ export const Azucar = () => {
         </form>
 
         <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
-
-        {/* Nuevo botón para ingresar fecha por voz */}
-        <button className='guardarBtn' onClick={handleVoiceInput}>
-          Ingresar fecha por voz
-        </button>
 
         <Link className='volverLink' to={'/'}>
           <button className='volverBtn'>Volver</button>
