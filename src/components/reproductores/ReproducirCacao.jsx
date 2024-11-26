@@ -36,8 +36,10 @@ export const ReproducirCacao = () => {
   let speachVencimiento = ''
   if (differenceInDays > 0)
     speachVencimiento = 'El cacao vence en: ' + differenceInDays + 'días'
-  else
+  else if (differenceInDays <= 0)
     speachVencimiento = 'El cacao está vencido, venció hace' + (differenceInDays * -1) + 'días'
+  else if (isNaN(differenceInDays))
+    speachVencimiento = 'El cacao vence el ' + fechaProducto
 
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {

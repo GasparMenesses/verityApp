@@ -3,7 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import './inicioVerity.css';
 import db from '../../db/db'; 
 
-export const ReproducirHarina = () => {
+export const ReproducirDulceDeLeche = () => {
 
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
@@ -11,7 +11,7 @@ export const ReproducirHarina = () => {
   const fetchFechaProducto = async () => {
     try {
       // Referencia al documento en Firestore
-      const docRef = doc(db, 'harina', 'fechaharina');
+      const docRef = doc(db, 'dulcedeleche', 'fechadulcedeleche');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         // Si el documento existe, guardamos el valor de la fecha en el estado
@@ -35,11 +35,11 @@ export const ReproducirHarina = () => {
   const differenceInDays = Math.ceil(differenceInMillis / (1000 * 60 * 60 * 24));
   let speachVencimiento = ''
   if (differenceInDays > 0)
-    speachVencimiento = 'La harina vence en: ' + differenceInDays + 'días'
+    speachVencimiento = 'El dulce de leche vence en: ' + differenceInDays + 'días'
   else if (differenceInDays <= 0)
-    speachVencimiento = 'La harina está vencida, venció hace' + (differenceInDays * -1) + 'días'
+    speachVencimiento = 'El dulce de leche está vencido, venció hace' + (differenceInDays * -1) + 'días'
   else if (isNaN(differenceInDays))
-    speachVencimiento = 'La harina vence ' + fechaProducto
+    speachVencimiento = 'El dulce de leche vence el ' + fechaProducto
 
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {

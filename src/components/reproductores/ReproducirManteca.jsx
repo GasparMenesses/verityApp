@@ -33,13 +33,13 @@ export const ReproducirManteca = () => {
 
   // Convierte la diferencia a días
   const differenceInDays = Math.ceil(differenceInMillis / (1000 * 60 * 60 * 24));
-
-  // Speach ve vencimiendo por producto
   let speachVencimiento = ''
   if (differenceInDays > 0)
     speachVencimiento = 'La manteca vence en: ' + differenceInDays + 'días'
-  else
+  else if (differenceInDays <= 0)
     speachVencimiento = 'La manteca está vencida, venció hace' + (differenceInDays * -1) + 'días'
+  else if (isNaN(differenceInDays))
+    speachVencimiento = 'La manteca vence el ' + fechaProducto
 
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {

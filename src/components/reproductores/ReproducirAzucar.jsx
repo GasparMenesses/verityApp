@@ -3,6 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import './inicioVerity.css';
 import db from '../../db/db'; 
 
+
 export const ReproducirAzucar = () => {
 
   // Estado para almacenar la fecha obtenida de Firestore
@@ -16,6 +17,7 @@ export const ReproducirAzucar = () => {
       if (docSnap.exists()) {
         // Si el documento existe, guardamos el valor de la fecha en el estado
         setFechaProducto(docSnap.data().fecha);
+        
       } else {
         console.log('¡No existe el documento!');
       }
@@ -23,6 +25,7 @@ export const ReproducirAzucar = () => {
       console.error('Error al obtener el documento:', error);
     }
   };
+
   const today = new Date(); // Fecha actual
 
   // Fecha objetivo ingresada por el usuario (año, mes - 1, día)
@@ -36,13 +39,17 @@ export const ReproducirAzucar = () => {
   let speachVencimiento = ''
   if (differenceInDays > 0)
     speachVencimiento = 'El azúcar vence en: ' + differenceInDays + 'días'
-  else
+  else if (differenceInDays <= 0)
     speachVencimiento = 'El azúcar está vencido, venció hace' + (differenceInDays * -1) + 'días'
+  else if (isNaN(differenceInDays))
+    speachVencimiento = 'el azúcar vence el ' + fechaProducto
+ 
 
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {
     fetchFechaProducto();
   }, []);
+
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {

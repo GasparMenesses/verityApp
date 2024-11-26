@@ -3,6 +3,7 @@ import './recipientes.css';
 import { Link } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 import db from '../../../db/db';
+import Swal from 'sweetalert2';
 
 export const Maicena = () => {
   const [fecha, setFecha] = useState('');
@@ -15,7 +16,6 @@ export const Maicena = () => {
     e.preventDefault();
     if (fecha) {
       try {
-        // Referencia al documento con el ID específico que viste en la base de datos
         const docRef = doc(db, 'maicena', 'fechamaicena');
         await setDoc(docRef, { fecha }, { merge: true });
         Swal.fire({
@@ -23,12 +23,12 @@ export const Maicena = () => {
           title: "Fecha guardada",
           text: "Los datos fueron actualizados con éxito"
         });
-        setFecha(''); // Limpiar el campo de fecha
+        setFecha('');
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Por favor ingresa una fecha"
+          text: "Ocurrió un problema al guardar la fecha. Intenta nuevamente."
         });
       }
     } else {
@@ -40,9 +40,65 @@ export const Maicena = () => {
     }
   };
 
+  const handleVoiceInput = () => {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "API de reconocimiento de voz no soportada en este navegador"
+      });
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'es-ES';
+    recognition.continuous = false;
+
+    recognition.onresult = async (event) => {
+      const transcript = event.results[0][0].transcript;
+      setFecha(transcript);
+      // Guardar la fecha directamente en Firebase después del reconocimiento
+      try {
+        const docRef = doc(db, 'maicena', 'fechamaicena');
+        await setDoc(docRef, { fecha: transcript }, { merge: true });
+        Swal.fire({
+          icon: "success",
+          title: "Fecha guardada",
+          text: "La fecha capturada por voz fue guardada exitosamente",
+          text: `Fecha reconocida: ${transcript}`,
+          timer: 4000, // Duración en milisegundos (4 segundos)
+          timerProgressBar: true,
+        });
+
+        const utterance = new SpeechSynthesisUtterance(transcript);
+        utterance.lang = "es-ES"; // Español
+        window.speechSynthesis.speak(utterance);
+
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al guardar la fecha",
+          text: "Hubo un problema guardando la fecha reconocida. Intenta nuevamente."
+        });
+      }
+    };
+
+    recognition.start();
+    // Configura un temporizador para detener el reconocimiento después de 3 segundos
+    setTimeout(() => {
+      recognition.stop();
+    }, 6000); // 6000 ms = 6 segundos
+  };
+
   return (
     <div>
       <h1 className='elementTitle'>MAICENA</h1>
+
+      <button className='guardarBtnVoz' onClick={handleVoiceInput}>
+        Ingresar fecha por voz
+      </button>
+        
       <h2 className='elementh2'>Fecha de vencimiento</h2>
 
       <div className='formDiv'>
@@ -54,8 +110,8 @@ export const Maicena = () => {
             value={fecha} 
             onChange={handleChange} 
             placeholder='Ingresar fecha' 
-            />
-         </form>
+          />
+        </form>
 
         <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
 

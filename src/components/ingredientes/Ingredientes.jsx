@@ -7,15 +7,33 @@ export const Ingredientes = () => {
     <div>
         <img src="" alt="" />
 
-
+        
 
         <h2 className='titleR'>INGREDIENTES</h2>
 
         <div className='recipientes'>
-            
-            <Link className='no-underline' to="/leche">
+
+            <Link className='no-underline' to="/caja1">
                 <div className='R'>
-                    <h2 className='textR'>Leche</h2>
+                    <h2 className='textR'>Caja 1</h2>
+                </div>
+            </Link>
+
+            <Link className='no-underline' to="/caja2">
+                <div className='R'>
+                    <h2 className='textR'>Caja 2</h2>
+                </div>
+            </Link>
+
+            <Link className='no-underline' to="/caja3">
+                <div className='R'>
+                    <h2 className='textR'>Caja 3</h2>
+                </div>
+            </Link>
+            
+            <Link className='no-underline' to="/dulcedeleche">
+                <div className='R'>
+                    <h2 className='textR'>Dulce De Leche</h2>
                 </div>
             </Link>
 

@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import db from '../../../db/db';
 import Swal from 'sweetalert2';
 
-export const Azucar = () => {
+export const Caja1 = () => {
   const [fecha, setFecha] = useState('');
 
   const handleChange = (e) => {
@@ -16,7 +16,7 @@ export const Azucar = () => {
     e.preventDefault();
     if (fecha) {
       try {
-        const docRef = doc(db, 'azucar', 'fechaazucar');
+        const docRef = doc(db, 'caja1', 'fechacaja1');
         await setDoc(docRef, { fecha }, { merge: true });
         Swal.fire({
           icon: "success",
@@ -60,7 +60,7 @@ export const Azucar = () => {
       setFecha(transcript);
       // Guardar la fecha directamente en Firebase después del reconocimiento
       try {
-        const docRef = doc(db, 'azucar', 'fechaazucar');
+        const docRef = doc(db, 'caja1', 'fechacaja1');
         await setDoc(docRef, { fecha: transcript }, { merge: true });
         Swal.fire({
           icon: "success",
@@ -93,7 +93,7 @@ export const Azucar = () => {
 
   return (
     <div>
-      <h1 className='elementTitle'>AZÚCAR</h1>
+      <h1 className='elementTitle'>CAJA1</h1>
 
       <button className='guardarBtnVoz' onClick={handleVoiceInput}>
         Ingresar fecha por voz
@@ -119,7 +119,7 @@ export const Azucar = () => {
           <button className='volverBtn'>Volver</button>
         </Link>
 
-        <Link className='volverLink' to={'/reproducirazucar'}>
+        <Link className='volverLink' to={'/reproducircaja1'}>
           <button className='volverBtn'>Reproductor</button>
         </Link>
       </div>

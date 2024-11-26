@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google-ai/generativelanguage": "^2.7.0",
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.7.7",
     "firebase": "^10.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

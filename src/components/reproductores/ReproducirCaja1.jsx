@@ -3,7 +3,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import './inicioVerity.css';
 import db from '../../db/db'; 
 
-export const ReproducirHarina = () => {
+
+export const ReproducirCaja1 = () => {
 
   // Estado para almacenar la fecha obtenida de Firestore
   const [fechaProducto, setFechaProducto] = useState('');
@@ -11,11 +12,12 @@ export const ReproducirHarina = () => {
   const fetchFechaProducto = async () => {
     try {
       // Referencia al documento en Firestore
-      const docRef = doc(db, 'harina', 'fechaharina');
+      const docRef = doc(db, 'caja1', 'fechacaja1');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         // Si el documento existe, guardamos el valor de la fecha en el estado
         setFechaProducto(docSnap.data().fecha);
+        
       } else {
         console.log('¡No existe el documento!');
       }
@@ -23,6 +25,7 @@ export const ReproducirHarina = () => {
       console.error('Error al obtener el documento:', error);
     }
   };
+
   const today = new Date(); // Fecha actual
 
   // Fecha objetivo ingresada por el usuario (año, mes - 1, día)
@@ -35,16 +38,19 @@ export const ReproducirHarina = () => {
   const differenceInDays = Math.ceil(differenceInMillis / (1000 * 60 * 60 * 24));
   let speachVencimiento = ''
   if (differenceInDays > 0)
-    speachVencimiento = 'La harina vence en: ' + differenceInDays + 'días'
+    speachVencimiento = 'El lote de la caja 1 vence en: ' + differenceInDays + 'días'
   else if (differenceInDays <= 0)
-    speachVencimiento = 'La harina está vencida, venció hace' + (differenceInDays * -1) + 'días'
+    speachVencimiento = 'El lote de la caja 1 está vencido, venció hace' + (differenceInDays * -1) + 'días'
   else if (isNaN(differenceInDays))
-    speachVencimiento = 'La harina vence ' + fechaProducto
+    speachVencimiento = 'El lote de la caja 1  vence el' + fechaProducto
+    
+ 
 
   // useEffect para llamar a la función cuando el componente se monta
   useEffect(() => {
     fetchFechaProducto();
   }, []);
+
   // Función para reproducir la fecha usando Speech Synthesis
   const leerTexto = () => {
     if ("speechSynthesis" in window && fechaProducto) {
