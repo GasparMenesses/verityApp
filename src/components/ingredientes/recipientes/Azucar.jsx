@@ -55,12 +55,21 @@ export const Azucar = () => {
 
     const recognition = new SpeechRecognition();
     recognition.lang = 'es-ES';
-    recognition.continuous = false; // Solo grabar una vez, no en bucle
+    recognition.continuous = false; // Grabar solo una vez
     recognition.interimResults = false; // Solo resultados finales
 
-    // Evento: Resultado exitoso
+    recognition.onstart = () => {
+      Swal.fire({
+        icon: 'info',
+        title: 'Grabando...',
+        text: 'Habla ahora. La grabación durará 5 segundos.',
+        timer: 5000,
+        timerProgressBar: true,
+      });
+    };
+
     recognition.onresult = async (event) => {
-      const transcript = event.results[0][0].transcript;
+      const transcript = event.results[0][0].transcript.trim();
       setFecha(transcript);
 
       try {
@@ -73,8 +82,7 @@ export const Azucar = () => {
           text: `Fecha capturada por voz: ${transcript}`,
         });
 
-        // Reproducir la fecha reconocida
-        const utterance = new SpeechSynthesisUtterance(transcript);
+        const utterance = new SpeechSynthesisUtterance(`Fecha guardada: ${transcript}`);
         utterance.lang = 'es-ES';
         window.speechSynthesis.speak(utterance);
       } catch (error) {
@@ -86,7 +94,6 @@ export const Azucar = () => {
       }
     };
 
-    // Evento: Error durante el reconocimiento
     recognition.onerror = (event) => {
       Swal.fire({
         icon: 'error',
@@ -95,13 +102,17 @@ export const Azucar = () => {
       });
     };
 
+    recognition.onend = () => {
+      console.log('Reconocimiento finalizado.');
+    };
+
     // Iniciar el reconocimiento de voz
     recognition.start();
 
-    // Detener el reconocimiento después de 5 segundos
+    // Detener el reconocimiento automáticamente después de 5 segundos
     setTimeout(() => {
       recognition.stop();
-    }, 5000); // 5000 ms = 5 segundos
+    }, 5000);
   };
 
   return (
@@ -109,7 +120,7 @@ export const Azucar = () => {
       <h1 className="elementTitle">AZÚCAR</h1>
 
       <button className="guardarBtnVoz" onClick={handleVoiceInput}>
-        Ingresar fecha por voz (Graba por 5 segundos)
+        Ingresar fecha por voz (5 segundos)
       </button>
 
       <h2 className="elementh2">Fecha de vencimiento</h2>
