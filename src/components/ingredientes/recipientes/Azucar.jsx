@@ -19,110 +19,127 @@ export const Azucar = () => {
         const docRef = doc(db, 'azucar', 'fechaazucar');
         await setDoc(docRef, { fecha }, { merge: true });
         Swal.fire({
-          icon: "success",
-          title: "Fecha guardada",
-          text: "Los datos fueron actualizados con éxito"
+          icon: 'success',
+          title: 'Fecha guardada',
+          text: 'Los datos fueron actualizados con éxito',
         });
         setFecha('');
       } catch (error) {
         Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Ocurrió un problema al guardar la fecha. Intenta nuevamente."
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrió un problema al guardar la fecha. Intenta nuevamente.',
         });
       }
     } else {
       Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Por favor ingresa una fecha"
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor ingresa una fecha',
       });
     }
   };
 
   const handleVoiceInput = () => {
-    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
       Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "API de reconocimiento de voz no soportada en este navegador"
+        icon: 'error',
+        title: 'Error',
+        text: 'API de reconocimiento de voz no soportada en este navegador',
       });
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = 'es-ES';
-    recognition.continuous = false;
+    recognition.continuous = false; // Solo grabar una vez, no en bucle
+    recognition.interimResults = false; // Solo resultados finales
 
+    // Evento: Resultado exitoso
     recognition.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
       setFecha(transcript);
-      // Guardar la fecha directamente en Firebase después del reconocimiento
+
       try {
         const docRef = doc(db, 'azucar', 'fechaazucar');
         await setDoc(docRef, { fecha: transcript }, { merge: true });
+
         Swal.fire({
-          icon: "success",
-          title: "Fecha guardada",
-          text: "La fecha capturada por voz fue guardada exitosamente",
-          text: `Fecha reconocida: ${transcript}`,
-          timer: 4000, // Duración en milisegundos (4 segundos)
-          timerProgressBar: true,
+          icon: 'success',
+          title: 'Fecha guardada',
+          text: `Fecha capturada por voz: ${transcript}`,
         });
 
+        // Reproducir la fecha reconocida
         const utterance = new SpeechSynthesisUtterance(transcript);
-        utterance.lang = "es-ES"; // Español
+        utterance.lang = 'es-ES';
         window.speechSynthesis.speak(utterance);
-
       } catch (error) {
         Swal.fire({
-          icon: "error",
-          title: "Error al guardar la fecha",
-          text: "Hubo un problema guardando la fecha reconocida. Intenta nuevamente."
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema guardando la fecha reconocida. Intenta nuevamente.',
         });
       }
     };
 
+    // Evento: Error durante el reconocimiento
+    recognition.onerror = (event) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: `Error en el reconocimiento de voz: ${event.error}`,
+      });
+    };
+
+    // Iniciar el reconocimiento de voz
     recognition.start();
-    // Configura un temporizador para detener el reconocimiento después de 3 segundos
+
+    // Detener el reconocimiento después de 5 segundos
     setTimeout(() => {
       recognition.stop();
-    }, 6000); // 6000 ms = 6 segundos
+    }, 5000); // 5000 ms = 5 segundos
   };
 
   return (
     <div>
-      <h1 className='elementTitle'>AZÚCAR</h1>
+      <h1 className="elementTitle">AZÚCAR</h1>
 
-      <button className='guardarBtnVoz' onClick={handleVoiceInput}>
-        Ingresar fecha por voz
+      <button className="guardarBtnVoz" onClick={handleVoiceInput}>
+        Ingresar fecha por voz (Graba por 5 segundos)
       </button>
-        
-      <h2 className='elementh2'>Fecha de vencimiento</h2>
 
-      <div className='formDiv'>
-        <form className='form'>
-          <h4 className='ingresarFecha'>Ingresar fecha haciendo click en el recuadro blanco</h4>
-          <input 
-            className='input' 
-            type="date" 
-            value={fecha} 
-            onChange={handleChange} 
-            placeholder='Ingresar fecha' 
+      <h2 className="elementh2">Fecha de vencimiento</h2>
+
+      <div className="formDiv">
+        <form className="form">
+          <h4 className="ingresarFecha">
+            Ingresar fecha haciendo click en el recuadro blanco
+          </h4>
+          <input
+            className="input"
+            type="date"
+            value={fecha}
+            onChange={handleChange}
+            placeholder="Ingresar fecha"
           />
         </form>
 
-        <button className='guardarBtn' onClick={handleSubmit}>Guardar</button>
+        <button className="guardarBtn" onClick={handleSubmit}>
+          Guardar
+        </button>
 
-        <Link className='volverLink' to={'/'}>
-          <button className='volverBtn'>Volver</button>
+        <Link className="volverLink" to={'/'}>
+          <button className="volverBtn">Volver</button>
         </Link>
 
-        <Link className='volverLink' to={'/reproducirazucar'}>
-          <button className='volverBtn'>Reproductor</button>
+        <Link className="volverLink" to={'/reproducirazucar'}>
+          <button className="volverBtn">Reproductor</button>
         </Link>
       </div>
     </div>
   );
-}
+};
